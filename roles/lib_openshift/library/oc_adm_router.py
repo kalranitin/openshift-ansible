@@ -63,15 +63,13 @@ description:
 options:
   state:
     description:
-    - Whether to create or delete the router
+    - State controls the action that will be taken with resource
     - present - create the router
     - absent - remove the router
     - list - return the current representation of a router
     required: false
     default: present
-    choices:
-    - present
-    - absent
+    choices: ["present", "absent", "list"]
     aliases: []
   kubeconfig:
     description:
@@ -2893,11 +2891,11 @@ class Router(OpenShiftCLI):
 
             router_pem = '/tmp/router.pem'
             with open(router_pem, 'w') as rfd:
-                rfd.write(open(self.config.config_options['cert_file']['value']).read())
-                rfd.write(open(self.config.config_options['key_file']['value']).read())
+                rfd.write(open(self.config.config_options['cert_file']['value']).read() + "\n")
+                rfd.write(open(self.config.config_options['key_file']['value']).read() + "\n")
                 if self.config.config_options['cacert_file']['value'] and \
                    os.path.exists(self.config.config_options['cacert_file']['value']):
-                    rfd.write(open(self.config.config_options['cacert_file']['value']).read())
+                    rfd.write(open(self.config.config_options['cacert_file']['value']).read() + "\n")
 
             atexit.register(Utils.cleanup, [router_pem])
 
@@ -3038,6 +3036,16 @@ class Router(OpenShiftCLI):
                                           skip_keys=skip,
                                           debug=self.verbose):
             self.prepared_router['Service']['update'] = True
+
+        # check_def_equal ignores metadata, so we need to check explicitly for
+        # the service.alpha.openshift.io/serving-cert-secret-name annotation.
+        if self.service:
+            user_annotations = self.service.get('metadata.annotations') or {}
+            result_annotations = self.prepared_router['Service']['obj'] \
+                                     .get('metadata.annotations') or {}
+            key = 'service.alpha.openshift.io/serving-cert-secret-name'
+            if user_annotations.get(key) != result_annotations.get(key):
+                self.prepared_router['Service']['update'] = True
 
         # DeploymentConfig:
         #   Router needs some exceptions.

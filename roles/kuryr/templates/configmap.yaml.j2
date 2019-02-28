@@ -236,9 +236,24 @@ data:
     # The comma-separated handlers that should be registered for watching
     # in the pipeline. (list value)
 {% if openshift_kuryr_subnet_driver|default('default') == 'namespace' %}
+{% if openshift_kuryr_sg_driver|default('default') == 'policy' %}
+    enabled_handlers = vif,lb,lbaasspec,namespace,policy,pod_label
+{% else %}
     enabled_handlers = vif,lb,lbaasspec,namespace
+{% endif %}
 {% else %}
     enabled_handlers = vif,lb,lbaasspec
+{% endif %}
+
+{% if (kuryr_controller_replicas|default(1)|int > 1) %}
+    # Enable kuryr-controller active/passive HA. Only supported in containerized
+    # deployments on Kubernetes or OpenShift. (boolean value)
+    controller_ha = true
+
+    # Port on which leader-elector pod is listening to. (port value)
+    # Minimum value: 0
+    # Maximum value: 65535
+    controller_ha_elector_port = {{ kuryr_controller_leader_elector_port }}
 {% endif %}
 
     [neutron]
@@ -362,7 +377,10 @@ data:
     ports_pool_update_frequency = {{ kuryr_openstack_pool_update_frequency | default(20) }}
 
     # Pod VIF drivers vs Pool Drivers mapping allowed
+    # pools_vif_drivers = nested:nested-vlan,neutron:neutron-vif
+{% if kuryr_openstack_pool_driver == 'multi' %}
     pools_vif_drivers = nested:nested-vlan,neutron:neutron-vif
+{% endif %}
 
     [health_server]
     port = {{ kuryr_controller_healthcheck_port }}

@@ -306,13 +306,17 @@ def normalize_openstack_facts(metadata, facts):
 
     for f_var, h_var, ip_var in [('hostname', 'hostname', 'local-ipv4'),
                                  ('public_hostname', 'public-hostname', 'public-ipv4')]:
+        if metadata['ec2_compat'][ip_var] == []:
+            metadata_ip_var = ""
+        else:
+            metadata_ip_var = metadata['ec2_compat'][ip_var].split(',')[0]
         try:
-            if socket.gethostbyname(metadata['ec2_compat'][h_var]) == metadata['ec2_compat'][ip_var]:
+            if socket.gethostbyname(metadata['ec2_compat'][h_var]) == metadata_ip_var:
                 facts['network'][f_var] = metadata['ec2_compat'][h_var]
             else:
-                facts['network'][f_var] = metadata['ec2_compat'][ip_var]
+                facts['network'][f_var] = metadata_ip_var
         except socket.gaierror:
-            facts['network'][f_var] = metadata['ec2_compat'][ip_var]
+            facts['network'][f_var] = metadata_ip_var
 
     return facts
 
@@ -1272,7 +1276,6 @@ def main():
     )
 
     module.params['gather_subset'] = ['hardware', 'network', 'virtual', 'facter']  # noqa: F405
-    module.params['gather_timeout'] = 10  # noqa: F405
     module.params['filter'] = '*'  # noqa: F405
 
     role = module.params['role']  # noqa: F405

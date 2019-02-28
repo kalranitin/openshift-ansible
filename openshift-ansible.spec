@@ -9,7 +9,7 @@
 %global __requires_exclude ^/usr/bin/ansible-playbook$
 
 Name:           openshift-ansible
-Version:        3.11.54
+Version:        3.11.89
 Release:        1%{?dist}
 Summary:        Openshift and Atomic Enterprise Ansible
 License:        ASL 2.0
@@ -189,6 +189,287 @@ BuildArch:     noarch
 %{_datadir}/ansible/%{name}/test
 
 %changelog
+* Sun Feb 24 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.89-1
+- Revert "JSON structure appears to have changed" (jgallego@redhat.com)
+- JSON structure appears to have changed (jgallego@redhat.com)
+- Set the SE boolean for docker to use samba (jgallego@redhat.com)
+- Adding samba-client to list of packages to install (jgallego@redhat.com)
+- Revert "[release-3.11] Correct regressions of Curator5 template file"
+  (ewolinet@redhat.com)
+
+* Fri Feb 22 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.88-1
+- Fix when clause formatting. (sarumuga@redhat.com)
+- Ensure dns records are available when deleting the stack
+  (ltomasbo@redhat.com)
+- kibana, curator ops false; wait for es deploy (rmeggins@redhat.com)
+- Uninstall no longer unmounts openshift.local.volumes (jstuever@redhat.com)
+- Add a empty device section if not present. If present, only add LIO section
+  under it. (sarumuga@redhat.com)
+- Move LIO-iSCSI comment to role (sarumuga@redhat.com)
+- Remove LIO-ORG configuration in multipath conf as new task will take care of
+  adding the device. (sarumuga@redhat.com)
+- Add product as "TCMU device". Without product field "multipath -t" fails to
+  list the device (sarumuga@redhat.com)
+- If the multipath config file already exists, append LIO-ORG device
+  configuration. (sarumuga@redhat.com)
+- Use force:no in template section to avoid overwrite (sarumuga@redhat.com)
+- Copy multipath.conf file only if target does not exists. This is to avoid any
+  overwriting of existing configuration. (sarumuga@redhat.com)
+
+* Wed Feb 20 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.87-1
+- Bug 1672847. Corrected KUBERNETES_TRUST_CERTIFICATES reference.
+  (bostrt@gmail.com)
+- Make same timezone with running hosts (bysnupy@hotmail.com)
+
+* Sun Feb 17 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.86-1
+- Add kuryr support for network policies (ltomasbo@redhat.com)
+- Correct regressions of Curator5 template file (bysnupy@hotmail.com)
+- Protect from dangerous etcd_image changes (vrutkovs@redhat.com)
+
+* Thu Feb 14 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.85-1
+- azure: fix typo in repo (jminter@redhat.com)
+- [KIECLOUD-112] - Update RHPAM/DM templates on OpenShift Service Catalog for
+  release 7.2.1 (fspolti@redhat.com)
+
+* Wed Feb 13 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.84-1
+- Removing SystemKeepFree to use default value (javilinux@gmail.com)
+- Run firewall task on upgrades (spasquie@redhat.com)
+- azure: pull RPMs from CDN (jminter@redhat.com)
+- openshift_node: use init_file to replace journald.conf settings
+  (jstuever@redhat.com)
+- Remove cfme templates from openshift_examples directory (simaishi@redhat.com)
+- Ignore paths in `etcd-servers-overrides` (vrutkovs@redhat.com)
+- add Initialize facts step to html_and_json_timestamp.yaml (gpei@redhat.com)
+- Fix gluster deploy checks (jimi@sngx.net)
+- GlusterFS: Recreate config directories for external uninstall
+  (jarrpa@redhat.com)
+- set permissions on vsphere.conf file (tmlapp@gmail.com)
+- Templates for CloudForms 4.7 (simaishi@redhat.com)
+
+* Sun Feb 10 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.83-1
+- Ensure async etcd-image-pull job exists before checking status.
+  (pdd@redhat.com)
+
+* Thu Feb 07 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.82-1
+- 
+
+* Thu Feb 07 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.81-1
+- Run nsx role on the first master only (yasensim@gmail.com)
+- GlusterFS: Keep logs on uninstall (jarrpa@redhat.com)
+- GlusterFS: Implement container image version check (jarrpa@redhat.com)
+- ovs process gets killed when oom-killer is invoked (pcameron@redhat.com)
+- Check for changes to volume-config in sync pod. (pdd@redhat.com)
+- Add new team members to OWNERS file. (pdd@redhat.com)
+- [BZ1665835] - jboss image streams do not have referencePolicy.type set to
+  local (fspolti@redhat.com)
+- Remove condition for pre-pulling container images. (pdd@redhat.com)
+
+* Wed Feb 06 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.80-1
+- 
+
+* Tue Feb 05 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.79-1
+- cert expiry: cert subject can contain unicode (vrutkovs@redhat.com)
+
+* Sun Feb 03 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.78-1
+- Fixes idempotency on update of service in oc_service
+  (eric.mountain@amadeus.com)
+- Fixing incorrect indentation for cns-secgrp in heat template
+  (bedin@redhat.com)
+- Added liveness probes to apiserver template (bysnupy@hotmail.com)
+
+* Thu Jan 31 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.77-1
+- Remove hard coded gather_timeout in openshift_facts (rteague@redhat.com)
+- Remove docker-common in uninstall (rteague@redhat.com)
+- Fix formatting (igeorgio@redhat.com)
+- Update router service when its annotation changes (miciah.masters@gmail.com)
+- multipath: add hardware_handler for LIO-ORG (gluster-block) config
+  (ndevos@redhat.com)
+- Set openshift_is_atomic default for gluster and kernel modules install
+  (igeorgio@redhat.com)
+
+* Tue Jan 29 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.76-1
+- Bug 1651632 - Force console rollout every time the playbook runs
+  (spadgett@redhat.com)
+- [KIECLOUD-71] -  Update PAM and DM templates on OpenShift for 7.2.0
+  (fspolti@redhat.com)
+- gluster: add HEKETI_DEBUG_UMOUNT_FAILURES environment variable for extra
+  debugging (ndevos@redhat.com)
+- return issuer of each certificate (dsanzmor@redhat.com)
+- Add EAP 7.2.0.GA imagestreams and templates (ken@zaptillion.net)
+- Fix OpenShift SDN/OVS pod restart during upgrades (rteague@redhat.com)
+- Revert "sdn: upgrade SDN after all nodes are upgraded." (rteague@redhat.com)
+
+* Sun Jan 27 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.75-1
+- Maintain etcd as owner of certs. (pdd@redhat.com)
+- Update Calico README (casey@tigera.io)
+- Allow configuration of Calico IP pools (casey@tigera.io)
+- Add newlines when concatenating router certificate (sdodson@redhat.com)
+- Add openshift_cloud_provider config for subnetwork-name (jkupfere@redhat.com)
+
+* Thu Jan 24 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.74-1
+- openshift_node: open the router stats port by default (pgier@redhat.com)
+- Pull heketi admin key from deploymentconfig object (m.andre@redhat.com)
+- Fixed "AnsibleUndefinedVariable: 'dict object' has no attribute
+  'annotations'" error. (fcarrus@redhat.com)
+- gluster: detect intent to deploy legacy OpenShift Container Storage
+  (ndevos@redhat.com)
+- Fix sanity-check removed vars (mgugino@redhat.com)
+- Fix documentation for oc - modules (sebastian.gumprich@supplyon.com)
+- Include namedcertificates in the list of expiration check
+  (dsanzmor@redhat.com)
+- Retrieve heketi secret before setting CLI command (m.andre@redhat.com)
+
+* Wed Jan 23 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.73-1
+- Hardcode CentOS repository template for 3.11 (mail@leoschabel.de)
+- Run nsx_node role on opensift nodes only, Closes #11038 (yasensim@gmail.com)
+- Add tasks to run init playbooks for collecting "openshift_is_atomic" fact
+  (bysnupy@hotmail.com)
+- Handle openshift multi-arch examples (jeyoung@redhat.com)
+- Fix auditConfig.policyConfiguration in master_check_paths_in_config
+  (jkupfere@redhat.com)
+- split readiness from liveness probe (jaboyd@redhat.com)
+- [release 3.11] Allow OpenStack persistent volumes to specify storage class
+  (tzumainn@redhat.com)
+- add new variables to specify storageclass to prometheus and alertmanager
+  (bysnupy@hotmail.com)
+
+* Sun Jan 20 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.72-1
+- 
+
+* Fri Jan 18 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.71-1
+- 
+
+* Tue Jan 15 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.70-1
+- fix 1665235. Specify logging cluster is requires restart
+  (jcantril@redhat.com)
+- [release 3.11] fix OpenStack heat template conditional (tzumainn@redhat.com)
+- glusterfs: Force delete heketi pod and avoid waiting for unmount, given that
+  we will be deleting glusterfs pod as well. (sarumuga@redhat.com)
+- [release 3.11] fix openstack facts when ec2 var is empty
+  (tzumainn@redhat.com)
+
+* Sun Jan 13 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.69-1
+- Add debug info for oc get --raw step csr module (mgugino@redhat.com)
+- Remove vendored ansible-profile callback (rteague@redhat.com)
+
+* Thu Jan 10 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.68-1
+- added enviroment values for easier heketi-cli usage (fcarrus@redhat.com)
+- Fix BZ1663306 when gluster nodes are SchedulingDisabled
+  (mrafcollins@gmail.com)
+- Fix install of kube_proxy_and_dns, with Calico (neil@tigera.io)
+- unsquished parameter words (fcarrus@redhat.com)
+- better and clearer indentation in template (fcarrus@redhat.com)
+- Fix README and remove tags (yasensim@gmail.com)
+- Do not disable ingressClass if nsx-lb is not used (yasensim@gmail.com)
+- Fix couple of obsolete warnings (yasensim@gmail.com)
+- Fix indentation (yasensim@gmail.com)
+- Contains all requested changes (simeonovy@simeonovy-a02.vmware.com)
+- Update roles/nsx_node/tasks/main.yml (roignac@gmail.com)
+- Update roles/nsx/templates/nsx-node-agent-configmap.yml.j2
+  (roignac@gmail.com)
+- Update roles/nsx/templates/ncp-configmap.yml.j2 (roignac@gmail.com)
+- Fix spaces and indentations (simeonovy@simeonovy-a02.vmware.com)
+- Update README.md (yasensim@gmail.com)
+- Add NSX-T support (yasensim@gmail.com)
+- test/aws: create necessary security groups (vrutkovs@redhat.com)
+- Use namespace variable instead of default namespace value, glusterfs
+  (sarumuga@redhat.com)
+- Use Calico v3.4.0 (neil@ossau.homelinux.net)
+- Add openshift_sdn_vxlan_port to change the vxlanPort (bysnupy@hotmail.com)
+- Added missing trailing space (f.carrus@gmail.com)
+- Update README.md (f.carrus@gmail.com)
+- Update README.md (f.carrus@gmail.com)
+- fixed indentation (fcarrus@redhat.com)
+- Added GlusterFS advanced options (fcarrus@redhat.com)
+
+* Sun Jan 06 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.67-1
+- 
+
+* Thu Jan 03 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.66-1
+- Switch subjectAltName type to bytes when checking certs using pyOpenSSL.
+  (pdd@redhat.com)
+- gluster: add volume mounts for /sys/class and /sys/module (ndevos@redhat.com)
+- glusterfs: re-add /dev bind-mount (ndevos@redhat.com)
+- sdn: upgrade SDN after all nodes are upgraded. (cdc@redhat.com)
+- add vsphere public network to 3.11 release (davis.phillips@gmail.com)
+
+* Tue Jan 01 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.65-1
+- 
+
+* Sun Dec 30 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.64-1
+- 
+
+* Thu Dec 27 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.63-1
+- 
+
+* Tue Dec 25 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.62-1
+- 
+
+* Sun Dec 23 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.61-1
+- Added proper crio doc (e.minguez@gmail.com)
+- fix ha install. delegating tasks to ca master (siva_teja.areti@nokia.com)
+- Add openshift_node_upgrade_pre_drain_hook (mgugino@redhat.com)
+- create kube proxy pods for nuage install (siva_teja.areti@nokia.com)
+- remove the hardcoded cert prefix in monitor config file
+  (siva_teja.areti@nokia.com)
+- fix openshift_service_type error in nuage_node role
+  (siva_teja.areti@nokia.com)
+- include nuage_node role when doing additional node config
+  (siva_teja.areti@nokia.com)
+- reploy etcd certificates whenever ansible is re-run
+  (siva_teja.areti@nokia.com)
+- remove the duplicate mounts in cni daemonset (siva_teja.areti@nokia.com)
+- remove the extra spaces before colon (siva_teja.areti@nokia.com)
+- include nuage masters in loadbalancer config (siva_teja.areti@nokia.com)
+
+* Fri Dec 21 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.60-1
+- [3.11] Fix CentOS repo version (mgugino@redhat.com)
+- Ensure multi pool driver can be disabled (ltomasbo@redhat.com)
+- sdn: exit when OVS crashes, tail logs (cdc@redhat.com)
+- Add possiblity to run kuryr-controller in HA (mdulko@redhat.com)
+- Erase docker during docker uninstall (mgugino@redhat.com)
+
+* Tue Dec 18 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.59-1
+- hostname is configured as local-ipv4 (bysnupy@hotmail.com)
+- Recovering missing features that disappear with PR 10805
+  (jparrill@redhat.com)
+
+* Mon Dec 17 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.58-1
+- bug 1655675. Extend DC recreate param to avoid premature rolebacks
+  (jcantril@redhat.com)
+- Maintain /var/lib/containers/storage mount during upgrades
+  (jstuever@redhat.com)
+- Fix openstack nsupdate record (tzumainn@redhat.com)
+- Fix output of insecure registries in /etc/containers/registries.conf
+  (umohnani@redhat.com)
+- logging support ansible 2.7 -no include_tasks parameter (rmeggins@redhat.com)
+
+* Thu Dec 13 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.57-1
+- Add openshift_node_group_name to hosts.example (rteague@redhat.com)
+- Set maxSurge in kuryr-controller Deployment (mdulko@redhat.com)
+- Update Fuse templates with 7.2 release (antonin@stefanutti.fr)
+
+* Wed Dec 12 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.56-1
+- 
+
+* Tue Dec 11 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.55-1
+- Handle audit log path in /var/log/origin (rsevilla@redhat.com)
+- Remove duplicated parameter CLUSTER_NAME on template gluster-s3-template.yml
+  (marcosmamorim@gmail.com)
+- Cleanup kuryr role (mdulko@redhat.com)
+- Install cifs-utils and samba required by Azure (jchaloup@redhat.com)
+- retries count increased on task (bilalccaliskan@gmail.com)
+- Use ansible 2.7.4 (roignac@gmail.com)
+- Update RBAC for Calico (mleung975@gmail.com)
+- Ensure OSE vars are not overwritten at the dynamic inventory
+  (ltomasbo@redhat.com)
+- add openshift_version dependency to openshift_repos role
+  (tzumainn@redhat.com)
+- openshift_ovirt: add vms into inventory groups (rgolan@redhat.com)
+- add nodejs rhoar and openjdk imagestreams for ppc64le (jeyoung@redhat.com)
+- Ensure openshift_upgrade_nodes_label works (mgugino@redhat.com)
+- Extend Openstack cloud provider LB parameters (yossi.boaron.1234@gmail.com)
+
 * Sun Dec 09 2018 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.54-1
 - 
 

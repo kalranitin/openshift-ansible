@@ -68,6 +68,7 @@ default_r_openshift_node_image_prep_packages:
 - atomic
 - cifs-utils    # requested by Azure
 - samba-common  # requested by Azure
+- samba-client  # requested by Azure
 r_openshift_node_image_prep_packages: "{{ default_r_openshift_node_image_prep_packages | union(openshift_node_image_prep_packages | default([])) }}"
 
 r_openshift_node_os_firewall_deny: []
@@ -81,7 +82,7 @@ default_r_openshift_node_os_firewall_allow:
 - service: https
   port: 443/tcp
 - service: OpenShift OVS sdn
-  port: 4789/udp
+  port: "{{ openshift_sdn_vxlan_port | default('4789') }}/udp"
   cond: openshift_use_openshift_sdn | bool
 - service: Calico BGP Port
   port: 179/tcp
@@ -94,6 +95,9 @@ default_r_openshift_node_os_firewall_allow:
   cond: "{{ openshift_node_port_range is defined }}"
 - service: Prometheus monitoring
   port: 9000-10000/tcp
+- service: Router stats port
+  port: 1936/tcp
+  cond: "{{ openshift_router_stats_port_enable | default(True) }}"
 # Allow multiple port ranges to be added to the role
 r_openshift_node_os_firewall_allow: "{{ default_r_openshift_node_os_firewall_allow | union(openshift_node_open_ports | default([])) }}"
 
@@ -115,7 +119,6 @@ journald_vars_to_replace:
 - { var: RateLimitInterval, val: 1s }
 - { var: RateLimitBurst, val: 10000 }
 - { var: SystemMaxUse, val: 8G }
-- { var: SystemKeepFree, val: 20% }
 - { var: SystemMaxFileSize, val: 10M }
 - { var: MaxRetentionSec, val: 1month }
 - { var: MaxFileSec, val: 1day }

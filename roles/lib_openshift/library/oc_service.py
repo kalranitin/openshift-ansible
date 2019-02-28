@@ -63,7 +63,10 @@ description:
 options:
   state:
     description:
-    - State represents whether to create, modify, delete, or list
+    - State controls the action that will be taken with resource
+    - present - create the service
+    - absent - remove the service
+    - list - return the current representation of a service
     required: False
     default: present
     choices: ["present", "absent", "list"]
@@ -1801,7 +1804,7 @@ class OCService(OpenShiftCLI):
 
     def needs_update(self):
         ''' verify an update is needed '''
-        skip = ['clusterIP', 'portalIP']
+        skip = ['clusterIP', 'portalIP', 'sessionAffinityConfig']
         return not Utils.check_def_equal(self.user_svc.yaml_dict, self.service.yaml_dict, skip_keys=skip, debug=True)
 
     # pylint: disable=too-many-return-statements,too-many-branches
