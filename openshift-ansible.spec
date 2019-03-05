@@ -9,7 +9,7 @@
 %global __requires_exclude ^/usr/bin/ansible-playbook$
 
 Name:           openshift-ansible
-Version:        3.11.89
+Version:        3.11.91
 Release:        1%{?dist}
 Summary:        Openshift and Atomic Enterprise Ansible
 License:        ASL 2.0
@@ -17,7 +17,7 @@ URL:            https://github.com/openshift/openshift-ansible
 Source0:        https://github.com/openshift/openshift-ansible/archive/%{commit}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
-Requires:      ansible >= 2.5.7
+Requires:      ansible >= 2.6
 Requires:      python2
 Requires:      python-six
 Requires:      tar
@@ -189,6 +189,31 @@ BuildArch:     noarch
 %{_datadir}/ansible/%{name}/test
 
 %changelog
+* Sun Mar 03 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.91-1
+- Require ansible 2.6, allow ansible 2.7 (vrutkovs@redhat.com)
+- Use correct Data Grid version (galder@zamarreno.com)
+- Adding docker as waagent systemd dependency (kwoodson@redhat.com)
+- Prevent OpenStack heat from trying to create router when provider network is
+  specified (tzumainn@redhat.com)
+- fixing docs to match actual defaults (mharri@redhat.com)
+- Correct service serving secret name in the annotation (bysnupy@hotmail.com)
+
+* Thu Feb 28 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.90-1
+- Add Data Grid 7.3 to OpenShift Cloud Platform (galder@zamarreno.com)
+- Handle null values and multiple certs when checking namedCertificates.
+  (pdd@redhat.com)
+- Re-create webconsole secrets and pods after master certs were redeployed
+  (vrutkovs@redhat.com)
+- Add a playbook to redeploy web-console certs (vrutkovs@redhat.com)
+- Update OWNERS file. (pdd@redhat.com)
+- test/ci/deprovision: wait for machine to be terminated (vrutkovs@redhat.com)
+- test/ci/deprovision: set shutdown behaviour when creating VMs
+  (vrutkovs@redhat.com)
+- test/ci: remove SG using `ec2_group` (vrutkovs@redhat.com)
+- Remove deprecated "openshift_logging_curator_run_timezone variable" as of
+  v3.11 (bysnupy@hotmail.com)
+- Uninstall: delete all cri-o containers. (jstuever@redhat.com)
+
 * Sun Feb 24 2019 AOS Automation Release Team <aos-team-art@redhat.com> 3.11.89-1
 - Revert "JSON structure appears to have changed" (jgallego@redhat.com)
 - JSON structure appears to have changed (jgallego@redhat.com)
