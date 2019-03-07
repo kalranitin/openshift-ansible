@@ -965,7 +965,10 @@ class OpenShiftCLI(object):
         '''create a temporary file and then call oc create on it'''
         fname = Utils.create_tmpfile(rname + '-')
         yed = Yedit(fname, content=content)
-        yed.write()
+        results = yed.put('allowVolumeExpansion',True)
+        if results[0]:
+            yed.write()
+        # yed.write()
 
         atexit.register(Utils.cleanup, [fname])
 

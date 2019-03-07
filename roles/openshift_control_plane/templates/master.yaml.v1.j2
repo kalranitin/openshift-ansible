@@ -81,8 +81,9 @@ kubernetesMasterConfig:
     - etcd3
     storage-media-type:
     - application/vnd.kubernetes.protobuf
-{% if openshift_master_use_persistentlocalvolumes | bool %}
     feature-gates:
+    - ExpandPersistentVolumes=true
+{% if openshift_master_use_persistentlocalvolumes | bool %}
     - PersistentLocalVolumes=true
     - VolumeScheduling=true
 {% endif %}
@@ -95,8 +96,9 @@ kubernetesMasterConfig:
     flex-volume-plugin-dir:
     - "/etc/origin/kubelet-plugins/volume/exec"
 {% endif %}
-{% if openshift_master_use_persistentlocalvolumes | bool %}
     feature-gates:
+    - ExpandPersistentVolumes=true
+{% if openshift_master_use_persistentlocalvolumes | bool %}
     - PersistentLocalVolumes=true
     - VolumeScheduling=true
 {% endif %}
